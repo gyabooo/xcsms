@@ -1,0 +1,130 @@
+{{-- layouts/app.blade.php を継承 --}}
+@extends('layouts.app')
+
+<!-- ページタイトルを入力 -->
+@section('title', '証明書詳細')
+
+<!-- ページの見出しを入力 -->
+@section('content_header')
+@stop
+
+<!-- ナビヘッダーにテキスト追加 -->
+@section('nav_header_menu')
+    <h4 class="navbar-text">証明書詳細</h4>
+    <h5 class="navbar-text">バーチャルドメイン - {{ $commonname->get_virtualdomain() }}</h5>
+    <h5 class="navbar-text">コモンネーム - {{ $commonname->get_name() }}</h5>
+@stop
+
+<!-- ページの内容を入力 -->
+@section('content')
+  @if (count($commonname->get_certificates()) > 0)
+    <div class="container">
+      <form action="{{ route('commonnames.update', $commonname->get_id()) }}" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <input name="_method" type="hidden" value="PUT">
+        <div class="btn-group certificate-btn-group" role="group">
+          <input type="submit" value="更新" class="btn btn-primary">
+          <a href="{{ url()->previous() }}" class="btn btn-default" role="button">戻る</a>
+        </div>
+    @foreach ($commonname->get_certificates() as $certificate)
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-solid">
+          <table class="certificate-table table table-bordered">
+            <tr>
+              <th class="col-md-2 bg-success">シンボリックリンク</th>
+              {{-- {{ dd($certificate[1]) }} --}}
+              @if ($certificate->get_symlink())
+                <td colspan="3" class="text-danger"><strong>有効</strong></td>
+              @else
+                <td colspan="3">無効</td>
+              @endif
+            </tr>
+            <tr>
+              <th class="bg-success">有効期限</th>
+              <td colspan="3">{{ $certificate->get_expiration_date() }}</td>
+            </tr>
+            <tr>
+              <th class="bg-success">保存先ディレクトリ</th>
+              <td colspan="3">{{ $certificate->get_save_dir_path() }}</td>
+            </tr>
+            <tr>
+              <th class="bg-success">証明書サービス</th>
+              <td colspan="3">{{ $certificate->get_servise() }}</td>
+            </tr>
+            <tr>
+              <th class="bg-success">csrファイル</th>
+              <td class="col-md-3">{{ $certificate->get_csr() }}</td>
+              <td class="col-md-3">
+                <label for="file-select-csr-{{ $certificate->get_id() }}" class="file-select-csr" role="button">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"></span>ファイル選択
+                  <input type="file" name="csr-file[{{ $certificate->get_id() }}]" id="file-select-csr-{{ $certificate->get_id() }}" role="button"class="hidden">
+                </label>
+              </td>
+              <td class="col-md-2">
+                <label for="file-upload-csr-{{ $certificate->get_id() }}" class="file-upload-csr" role="button">
+                  <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>サーバーへアップロード
+                  <div id="file-upload-csr-{{ $certificate->get_id() }}" class="hidden"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <th class="bg-success">crtファイル</th>
+              <td>{{ $certificate->get_crt() }}</td>
+              <td class="col-md-3">
+                <label for="file-select-crt-{{ $certificate->get_id() }}" class="file-select-crt" role="button">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"></span>ファイル選択
+                  <input type="file" name="crt-file[{{ $certificate->get_id() }}]" id="file-select-crt-{{ $certificate->get_id() }}" role="button"class="hidden">
+                </label>
+              </td>
+              <td class="col-md-2">
+                <label for="file-upload-crt-{{ $certificate->get_id() }}" class="file-upload-crt" role="button">
+                  <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>サーバーへアップロード
+                  <div id="file-upload-crt-{{ $certificate->get_id() }}" class="hidden"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <th class="bg-success">cacertファイル</th>
+              <td>{{ $certificate->get_cacert() }}</td>
+              <td class="col-md-3">
+                <label for="file-select-cacert-{{ $certificate->get_id() }}" class="file-select-cacert" role="button">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"></span>ファイル選択
+                  <input type="file" name="cacert-file[{{ $certificate->get_id() }}]" id="file-select-cacert-{{ $certificate->get_id() }}" role="button"class="hidden">
+                </label>
+              </td>
+              <td class="col-md-2">
+                <label for="file-upload-cacert-{{ $certificate->get_id() }}" class="file-upload-cacert" role="button">
+                  <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>サーバーへアップロード
+                  <div id="file-upload-cacert-{{ $certificate->get_id() }}" class="hidden"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <th class="bg-success">keyファイル</th>
+              <td>{{ $certificate->get_key() }}</td>
+              <td class="col-md-3">
+                <label for="file-select-key-{{ $certificate->get_id() }}" class="file-select-key" role="button">
+                  <span class="glyphicon glyphicon-file" aria-hidden="true"></span>ファイル選択
+                  <input type="file" name="cacert-file[{{ $certificate->get_id() }}]" id="file-select-key-{{ $certificate->get_id() }}" role="button"class="hidden">
+                </label>
+              </td>
+              <td class="col-md-2">
+                <label for="file-upload-key-{{ $certificate->get_id() }}" class="file-upload-key" role="button">
+                  <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span>サーバーへアップロード
+                  <div id="file-upload-key-{{ $certificate->get_id() }}" class="hidden"></div>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <drop @send-file="sendFile"></drop>
+            </tr>
+          </table>
+        </div>
+        </div>
+      </div>
+    @endforeach
+      </form>
+    </div>
+  @endif
+@stop

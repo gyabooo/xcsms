@@ -1,0 +1,27 @@
+.no-gutters {
+  margin:0;
+  padding:0;
+}
+
+.no-gutters　> .col,
+.no-gutters　> [class*="col-"] {
+  margin:0;
+  padding:0;
+}
+
+.hidden {
+  display: none;
+}
+
+.navbar-text {
+  display: inline-block;
+  color: #fff;
+  height: 52px;
+  line-height: 52px;
+  box-sizing: border-box;
+  margin: 0 15px;
+}
+
+.certificate-btn-group {
+  margin-bottom: 10px;
+}
