@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 <!-- ページタイトルを入力 -->
-@section('title', '証明書編集')
+@section('title', 'コモンネーム作成')
 
 <!-- ページの見出しを入力 -->
 @section('content_header')
@@ -10,19 +10,16 @@
 
 <!-- ナビヘッダーにテキスト追加 -->
 @section('nav_header_menu')
-    <h4 class="navbar-text">証明書編集</h4>
-    <h5 class="navbar-text">バーチャルドメイン - {{ $certificate->get_virtualdomain()->get_name() }}</h5>
-    <h5 class="navbar-text">コモンネーム - {{ $certificate->get_commonname()->get_name() }}</h5>
+    <h4 class="navbar-text">コモンネーム作成</h4>
 @stop
 
 <!-- ページの内容を入力 -->
 @section('content')
   <div class="container" id="app">
-    <form action="{{ route('commonnames.certificates.update', [$commonname_id, $certificate->get_id()] ) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('commonnames.create') }}" method="post" enctype="multipart/form-data">
       {{ csrf_field() }}
-      {{ method_field('PUT') }}
       <div class="btn-group certificate-btn-group" role="group">
-        <input type="submit" value="更新" class="btn btn-primary">
+        <input type="submit" value="作成" class="btn btn-primary">
         <a href="{{ url()->previous() }}" class="btn btn-default" role="button">戻る</a>
       </div>
       <div class="row">

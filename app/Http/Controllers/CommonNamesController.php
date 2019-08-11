@@ -25,7 +25,6 @@ class CommonNamesController extends Controller
     public function index()
     {
         $commonname_list = $this->CertificateService->get_commonname_list();
-        // dd($commonname_list);
         return view('commonnames.index', ['commonnames' => $commonname_list->getIterator()]);
     }
 
@@ -36,7 +35,7 @@ class CommonNamesController extends Controller
      */
     public function create()
     {
-        //
+        return view('commonnames.create');
     }
 
     /**

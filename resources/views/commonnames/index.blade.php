@@ -2,14 +2,18 @@
 @extends('layouts.app')
 
 <!-- ページタイトルを入力 -->
-@section('title', '証明書一覧')
+@section('title', 'コモンネーム一覧')
 
 <!-- ページの見出しを入力 -->
 @section('content_header')
 @stop
 
 @section('nav_header_menu')
-    <h4 class="navbar-text">証明書一覧</h4>
+    <h4 class="navbar-text">コモンネーム一覧</h4>
+    <div class="btn-group certificate-btn-group" role="group">
+        <a href="{{ route('commonnames.create') }}" class="btn btn-primary" role="button">新規作成</a>
+        {{-- <a href="{{ url()->previous() }}" class="btn btn-default" role="button">戻る</a> --}}
+    </div>
 @stop
 
 <!-- ページの内容を入力 -->

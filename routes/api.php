@@ -31,7 +31,3 @@ Route::get('/commonnames', function () {
         collect(app()->make('CertificateService')->get_commonname_list()->getIterator())
     );
 });
-
-Route::post('fileupload', function () {
-    dd(request()->file->getClientOriginalName());
-});

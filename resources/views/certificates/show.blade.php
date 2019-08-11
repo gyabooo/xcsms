@@ -18,7 +18,7 @@
 <!-- ページの内容を入力 -->
 @section('content')
   @if (count($commonname->get_certificates()) > 0)
-    <div class="container">
+    <div class="container" id="app">
       <form action="{{ route('commonnames.update', $commonname->get_id()) }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input name="_method" type="hidden" value="PUT">
@@ -33,7 +33,13 @@
           <table class="certificate-table table table-bordered">
             <tr>
               <th class="col-md-2 bg-success">シンボリックリンク</th>
-              {{-- {{ dd($certificate[1]) }} --}}
+              <td>
+                  <toggle-button
+                    :value="{{ var_export($certificate->get_symlink()) }}"
+                    :labels="{checked: '有効', unchecked: '無効'}"
+                    :disabled="true"
+                  ></toggle-button>
+              </td>
               @if ($certificate->get_symlink())
                 <td colspan="3" class="text-danger"><strong>有効</strong></td>
               @else
@@ -115,9 +121,6 @@
                   <div id="file-upload-key-{{ $certificate->get_id() }}" class="hidden"></div>
                 </label>
               </td>
-            </tr>
-            <tr>
-              <drop @send-file="sendFile"></drop>
             </tr>
           </table>
         </div>

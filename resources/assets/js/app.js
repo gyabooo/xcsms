@@ -18,6 +18,9 @@ window.Vue = require('vue');
 
 
 // Vue.component('certificate_index', require('./components/certificates/Index.vue').default);
+// require('vue-js-toggle-button');
+import { ToggleButton } from 'vue-js-toggle-button'
+Vue.component('ToggleButton', ToggleButton);
 
 Vue.component('drop', require('./components/certificates/Drop.vue').default);
 const app = new Vue({
