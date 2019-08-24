@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class CurrentCertificate extends Model
 {
-    public function common_name()
+    protected $fillable = ['commonname_id', 'certificate_id'];
+
+    public function commonname()
     {
-        return $this->belongsTo('App\Models\CommonName');
+        return $this->belongsTo('App\Models\Commonname');
     }
 
     public function certificate()

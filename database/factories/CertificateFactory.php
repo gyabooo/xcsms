@@ -14,7 +14,7 @@ $factory->define(App\Models\Certificate::class, function (Faker $faker) {
         'crt' => $faker->image($dir, $width, $height, 'cats', false),
         'key' => $faker->image($dir, $width, $height, 'cats', false),
         'certificate_service_id' => APP\Models\CertificateService::pluck('id')->random(),
-        'common_name_id' => APP\Models\CommonName::pluck('id')->random(),
+        'commonname_id' => APP\Models\Commonname::pluck('id')->random(),
         'created_at' => $faker->dateTime('now', 'Asia/Tokyo'),
     ];
 });

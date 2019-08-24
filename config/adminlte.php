@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'skin' => 'blue',
+    'skin' => 'green',
 
     /*
     |--------------------------------------------------------------------------
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'collapse_sidebar' => true,
+    'collapse_sidebar' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -109,13 +109,18 @@ return [
 
     'menu' => [
         // 'MAIN NAVIGATION',
-        // [
-        //     'text'        => '証明書一覧',
-        //     'url'         => '#',
-        //     'icon'        => 'file',
-        //     'label'       => 4,
-        //     'label_color' => 'success',
-        // ],
+        [
+            'text'        => 'コモンネーム',
+            'url'         => '/commonnames',
+            'icon'        => 'file',
+            // 'label'       => 4,
+            // 'label_color' => 'success',
+        ],
+        [
+            'text' => 'バーチャルドメイン',
+            'url' => '/virtualdomains',
+            'icon' => 'file'
+        ],
         // 'ACCOUNT SETTINGS',
         // [
         //     'text' => 'Profile',

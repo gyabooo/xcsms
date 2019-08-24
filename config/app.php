@@ -182,6 +182,7 @@ return [
         App\Providers\AdminLteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\CertificateServiceProvider::class,
+        App\Providers\VirtualdomainServiceProvider::class,
     ],
 
     /*

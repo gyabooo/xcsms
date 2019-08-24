@@ -25,9 +25,18 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(\App\Services\CertificateDataAccess::class, function ($app) {
             return new \App\Repositories\CertificateRepository(
-                new \App\Models\CommonName,
+                new \App\Models\Commonname,
                 new \App\Models\Certificate,
-                new \App\Entities\CommonNameList
+                new \App\Models\Virtualdomain,
+                new \App\Models\CertificateService,
+                new \App\Entities\CommonnameList
+            );
+        });
+
+        $this->app->bind(\App\Services\VirtualdomainDataAccess::class, function ($app) {
+            return new \App\Repositories\VirtualdomainRepository(
+                new \App\Models\Virtualdomain,
+                new \App\Entities\VirtualdomainList
             );
         });
     }

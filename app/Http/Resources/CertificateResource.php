@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
-use App\Services\CertificateService;
+use App\Services\CertificatesService;
 
 class CertificateResource extends Resource
 {

@@ -2,22 +2,22 @@
 
 namespace App\Entities;
 
-class CommonNameList implements \IteratorAggregate
+class CommonnameList implements \IteratorAggregate
 {
-  private $CommonNameList;
+  private $CommonnameList;
 
   public function __construct()
   {
-    $this->CommonNameList = new \ArrayObject();
+    $this->CommonnameList = new \ArrayObject();
   }
 
-  public function add(CommonName $CommonName)
+  public function add(Commonname $Commonname)
   {
-    $this->CommonNameList[] = $CommonName;
+    $this->CommonnameList[] = $Commonname;
   }
 
   public function getIterator(): \ArrayIterator
   {
-    return $this->CommonNameList->getIterator();
+    return $this->CommonnameList->getIterator();
   }
 }

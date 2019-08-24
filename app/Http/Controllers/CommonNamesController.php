@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CommonName;
 use Illuminate\Http\Request;
-use App\Services\CertificateService;
 
-class CommonNamesController extends Controller
+class CommonnamesController extends Controller
 {
 
     // protected $Certificate;
     private $CertificateService;
 
-    public function __construct(CertificateService $CertificateService)
+    public function __construct()
     {
-        $this->CertificateService = $CertificateService;
+        $this->CertificateService = resolve('CertificateService');
     }
 
     /**
@@ -35,7 +33,10 @@ class CommonNamesController extends Controller
      */
     public function create()
     {
-        return view('commonnames.create');
+        $certificate_services = $this->CertificateService->get_certificate_service_list()->getIterator();
+        $virtualdomains = $this->CertificateService->get_virtualdomain_list()->getIterator();
+        // dd($virtualdomains);
+        return view('commonnames.create', compact('certificate_services', 'virtualdomains'));
     }
 
     /**
@@ -46,7 +47,12 @@ class CommonNamesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
+        // dd($request->all());
+        $name = $request->input('commonname');
+        $id = (int) $request->input('virtualdomain_id');
+        $this->CertificateService->store_commonname($name, $id);
+        return redirect()->route('commonnames.index');
     }
 
     /**
@@ -67,9 +73,12 @@ class CommonNamesController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function edit(Certificate $certificate)
+    public function edit(int $commonname_id)
     {
-        //
+        // dd($request);
+        $commonname = $this->CertificateService->get_commonname_by_id($commonname_id);
+        $virtualdomains = $this->CertificateService->get_virtualdomain_list_with_selected($commonname->get_virtualdomain()->get_id());
+        return view('commonnames.edit', compact('commonname', 'virtualdomains'));
     }
 
     /**
@@ -79,13 +88,14 @@ class CommonNamesController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function update(int $commonname_id, Request $request)
     {
-        // dd($id);
-        // foreach ($request->file('csr-file') as $key => $value){
-        //     dd($value);
-        // }
-        dd($request->file('csr-file'));
+        $this->CertificateService->update_commonname(
+            $commonname_id,
+            (int) $request->virtualdomain_id,
+            $request->commonname
+        );
+        return redirect()->route('commonnames.index');
     }
 
     /**
@@ -94,8 +104,9 @@ class CommonNamesController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Certificate $certificate)
+    public function destroy(int $commonname_id, Request $request)
     {
-        //
+        $this->CertificateService->destroy_commonname_by_id($commonname_id);
+        return redirect()->route('commonnames.index')->with('flash_message', '削除が完了しました');
     }
 }

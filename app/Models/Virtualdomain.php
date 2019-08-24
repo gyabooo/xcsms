@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Virtualdomain extends Model
 {
-    public function common_names()
+    // protected $fillable = ['id', 'name'];
+
+    public function commonnames()
     {
-        return $this->hasMany('App\Models\CommonName');
+        return $this->hasMany('App\Models\Commonname');
     }
 }

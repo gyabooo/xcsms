@@ -14,10 +14,10 @@ class CreateCertificateServicesTable extends Migration
     public function up()
     {
         Schema::create('certificate_services', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('vendor_id')->unsigned();
-            $table->foreign('vendor_id')->references('id')->on('vendors');
+            $table->bigInteger('vendor_id')->unsigned()->nullable(true);
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(VendorTableSeeder::class);
         $this->call(CertificateServiceTableSeeder::class);
-        $this->call(CommonNameTableSeeder::class);
+        $this->call(CommonnameTableSeeder::class);
         $this->call(CertificateTableSeeder::class);
         // $certificate_service_ids = APP\CertificateService::pluck('id');
         // $certificate_ids = APP\Certificate::pluck('id');

@@ -11,14 +11,13 @@
 <!-- ナビヘッダーにテキスト追加 -->
 @section('nav_header_menu')
     <h4 class="navbar-text">証明書詳細</h4>
-    <h5 class="navbar-text">バーチャルドメイン - {{ $commonname->get_virtualdomain() }}</h5>
+    <h5 class="navbar-text">バーチャルドメイン - {{ $commonname->get_virtualdomain()->get_name() }}</h5>
     <h5 class="navbar-text">コモンネーム - {{ $commonname->get_name() }}</h5>
 @stop
 
 <!-- ページの内容を入力 -->
 @section('content')
   @if (count($commonname->get_certificates()) > 0)
-    <div class="container" id="app">
       <form action="{{ route('commonnames.update', $commonname->get_id()) }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <input name="_method" type="hidden" value="PUT">
@@ -59,7 +58,7 @@
               <td colspan="3">{{ $certificate->get_servise() }}</td>
             </tr>
             <tr>
-              <th class="bg-success">csrファイル</th>
+              <th class="bg-success">CSRファイル</th>
               <td class="col-md-3">{{ $certificate->get_csr() }}</td>
               <td class="col-md-3">
                 <label for="file-select-csr-{{ $certificate->get_id() }}" class="file-select-csr" role="button">
@@ -75,7 +74,7 @@
               </td>
             </tr>
             <tr>
-              <th class="bg-success">crtファイル</th>
+              <th class="bg-success">証明書</th>
               <td>{{ $certificate->get_crt() }}</td>
               <td class="col-md-3">
                 <label for="file-select-crt-{{ $certificate->get_id() }}" class="file-select-crt" role="button">
@@ -91,7 +90,7 @@
               </td>
             </tr>
             <tr>
-              <th class="bg-success">cacertファイル</th>
+              <th class="bg-success">中間証明書</th>
               <td>{{ $certificate->get_cacert() }}</td>
               <td class="col-md-3">
                 <label for="file-select-cacert-{{ $certificate->get_id() }}" class="file-select-cacert" role="button">
@@ -107,7 +106,7 @@
               </td>
             </tr>
             <tr>
-              <th class="bg-success">keyファイル</th>
+              <th class="bg-success">秘密鍵</th>
               <td>{{ $certificate->get_key() }}</td>
               <td class="col-md-3">
                 <label for="file-select-key-{{ $certificate->get_id() }}" class="file-select-key" role="button">
@@ -128,6 +127,5 @@
       </div>
     @endforeach
       </form>
-    </div>
   @endif
 @stop

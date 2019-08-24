@@ -13,8 +13,12 @@
 
 Route::get('/', 'CommonNamesController@index');
 
-Route::resource('commonnames', 'CommonNamesController');
+Route::resource('commonnames', 'CommonNamesController')->except([
+  'store'
+]);
 
 Route::resource('commonnames.certificates', 'CertificatesController')->only([
-  'edit', 'update',  'create', 'store', 'destroy'
+  'edit', 'create', 'destroy'
 ]);
+
+Route::resource('virtualdomains', 'VirtualdomainsController');

@@ -2,6 +2,8 @@
 
 namespace App\Entities;
 
+// use App\Services\CertificateService;
+
 class Certificate
 {
   private $id;
@@ -18,14 +20,14 @@ class Certificate
 
   public function __construct(
     int $id,
-    string $expiration_date,
-    string $save_dir_path,
-    string $csr,
-    string $crt,
-    string $cacert,
-    string $key,
-    string $service,
-    bool $symlink = false
+    ?string $expiration_date,
+    ?string $save_dir_path,
+    ?string $csr,
+    ?string $crt,
+    ?string $cacert,
+    ?string $key,
+    ?CertificateService $service,
+    ?bool $symlink = false
   )
   {
     $this->id = $id;
@@ -44,42 +46,47 @@ class Certificate
     return $this->id;
   }
 
-  public function get_expiration_date(): string
+  public function get_expiration_date()
   {
     return $this->expiration_date;
   }
 
-  public function get_save_dir_path(): string
+  public function get_save_dir_path()
   {
     return $this->save_dir_path;
   }
 
-  public function get_csr(): string
+  public function get_csr()
   {
     return $this->csr;
   }
 
-  public function get_crt(): string
+  public function get_crt()
   {
     return $this->crt;
   }
 
-  public function get_key(): string
+  public function get_key()
   {
     return $this->key;
   }
 
-  public function get_cacert(): string
+  public function get_cacert()
   {
     return $this->cacert;
   }
 
-  public function get_service(): string
+  public function set_service(CertificateService $certificate_service)
+  {
+    $this->service = $certificate_service;
+  }
+
+  public function get_service(): ?CertificateService
   {
     return $this->service;
   }
 
-  public function get_symlink(): bool
+  public function get_symlink(): ?bool
   {
     return $this->symlink;
   }
@@ -106,6 +113,13 @@ class Certificate
 
   public function toArray()
   {
-    return get_object_vars($this);
+    // $virtualdomain_array = $this->get_virtualdomain()->toArray();
+    // $commonname_array = $this->get_commonname()->toArray();
+    $certificate_array = get_object_vars($this);
+
+    // $certificate_array['virtualdomain'] = $virtualdomain_array;
+    // $certificate_array['commonname'] = $commonname_array;
+
+    return $certificate_array;
   }
 }

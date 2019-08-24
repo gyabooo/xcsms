@@ -13,11 +13,11 @@ class CreateSslCertificatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('common_names', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('commonnames', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name')->nullable(false);
-            $table->integer('virtualdomain_id')->unsigned();
-            $table->foreign('virtualdomain_id')->references('id')->on('virtualdomains');
+            $table->bigInteger('virtualdomain_id')->unsigned()->nullable(true);
+            $table->foreign('virtualdomain_id')->references('id')->on('virtualdomains')->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateSslCertificatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('common_names');
+        Schema::dropIfExists('commonnames');
     }
 }

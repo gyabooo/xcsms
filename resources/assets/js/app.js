@@ -16,13 +16,22 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// import EventHub from './EventHub'
+// Vue.use(EventHub)
 
-// Vue.component('certificate_index', require('./components/certificates/Index.vue').default);
-// require('vue-js-toggle-button');
+Vue.prototype.$eventHub = new Vue();
+
 import { ToggleButton } from 'vue-js-toggle-button'
-Vue.component('ToggleButton', ToggleButton);
+Vue.use(ToggleButton)
 
-Vue.component('drop', require('./components/certificates/Drop.vue').default);
+Vue.component('CertificatesDrop', require('./components/certificates/Drop.vue').default);
+Vue.component('CertificatesEdit', require('./components/certificates/Edit.vue').default);
+Vue.component('CertificatesSubmit', require('./components/certificates/Submit.vue').default);
+Vue.component('CertificatesSymlinkButton', require('./components/certificates/SymlinkButton.vue').default);
+Vue.component('CertificatesDropSpace', require('./components/certificates/DropSpace.vue').default);
+Vue.component('CommonnamesCards', require('./components/commonnames/index.vue').default);
+
+
 const app = new Vue({
     el: '#app'
 });

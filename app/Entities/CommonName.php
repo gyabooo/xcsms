@@ -3,7 +3,7 @@
 namespace App\Entities;
 
 
-class CommonName
+class Commonname
 {
   private $id;
   private $name;

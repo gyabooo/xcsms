@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CommonName;
 use Illuminate\Http\Request;
-// use App\Repositories\Certificate\CertificateDataAccessRepositoryInterface as CertificateDataAccess;
-use App\Services\CertificateService;
 
 class CertificatesController extends Controller
 {
 
-    // protected $Certificate;
+    // protected $CertificateService;
     private $CertificateService;
 
-    public function __construct(CertificateService $CertificateService)
+    public function __construct()
     {
-        $this->CertificateService = $CertificateService;
+        $this->CertificateService = resolve('CertificateService');
     }
 
     /**
@@ -23,20 +20,23 @@ class CertificatesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $commonname_list = $this->CertificateService->get_commonname_list();
-        return view('certificates.index', ['commonnames' => $commonname_list->getIterator()]);
-    }
+    // public function index()
+    // {
+    //     $commonname_list = $this->CertificateService->get_commonname_list()->getIterator();
+    //     return view('certificates.index', compact('commonname_list'));
+
+    // }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $commonname_id)
     {
-        //
+        $commonname = $this->CertificateService->get_commonname_by_id($commonname_id);
+        $certificate_services = $this->CertificateService->get_certificate_service_list()->getIterator();
+        return view('certificates.create', compact('commonname', 'certificate_services'));
     }
 
     /**
@@ -47,7 +47,7 @@ class CertificatesController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        
     }
 
     /**
@@ -56,12 +56,11 @@ class CertificatesController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
-    {
-        $commonname = $this->CertificateService->get_commonname_by_id($id);
-        // dd($commonname);
-        return view('certificates.show', ['commonname' => $commonname]);
-    }
+    // public function show(int $commonname_id)
+    // {
+    //     $commonname = $this->CertificateService->get_commonname_by_id($commonname_id);
+    //     return view('certificates.show', ['commonname' => $commonname]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -72,7 +71,10 @@ class CertificatesController extends Controller
     public function edit(int $commonname_id, int $certificate_id)
     {
         $certificate = $this->CertificateService->get_certificate_by_id($certificate_id);
-        return view('certificates.edit', compact('commonname_id', 'certificate'));
+        // dd();
+        $certificate_services = $this->CertificateService->get_certificate_service_list_with_selected($certificate->get_service()->get_id());
+        
+        return view('certificates.edit', compact('commonname_id', 'certificate', 'certificate_services'));
     }
 
     /**
@@ -82,14 +84,10 @@ class CertificatesController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
-    {
-        // dd($id);
-        // foreach ($request->file('csr-file') as $key => $value){
-        //     dd($value);
-        // }
-        dd($request->file('csr-file'));
-    }
+    // public function update(Request $request, string $id)
+    // {
+
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -97,8 +95,9 @@ class CertificatesController extends Controller
      * @param  \App\Certificate  $certificate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Certificate $certificate)
+    public function destroy(int $commonname_id, int $certificate_id)
     {
-        //
+        $this->CertificateService->destroy_certificate_by_id($certificate_id);
+        return redirect()->route('commonnames.show', ['commonname_id' => $commonname_id])->with('flash_message', '証明書の削除が完了しました');
     }
 }

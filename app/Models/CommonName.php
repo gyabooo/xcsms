@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CommonName extends Model
+class Commonname extends Model
 {
+    protected $fillable = ['name', 'virtualdomain_id'];
+
     public function virtualdomain()
     {
         return $this->belongsTo('App\Models\Virtualdomain');

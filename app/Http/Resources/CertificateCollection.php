@@ -14,6 +14,7 @@ class CertificateCollection extends ResourceCollection
      */
     public function toArray($request)
     {
+        // dd(parent::toArray($request));
         return parent::toArray($request);
     }
 }

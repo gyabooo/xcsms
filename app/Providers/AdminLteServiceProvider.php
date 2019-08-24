@@ -15,13 +15,17 @@ class AdminLteServiceProvider extends ServiceProvider
      */
     public function boot(Dispatcher $events)
     {
-        $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
-            $event->menu->add('作業');
-            $event->menu->add([
-                'text' => '証明書',
-                'url' => route('commonnames.index'),
-            ]);
-        });
+        // $events->listen(BuildingMenu::class, function (BuildingMenu $event) {
+        //     // $event->menu->add('作業');
+        //     $event->menu->add([
+        //         'text' => 'コモンネーム',
+        //         'url' => route('commonnames.index'),
+        //     ]);
+        //     $event->menu->add([
+        //         'text' => 'バーチャルドメイン',
+        //         'url' => route('commonnames.index'),
+        //     ]);
+        // });
     }
 
     /**
